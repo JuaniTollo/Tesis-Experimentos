@@ -7,7 +7,17 @@ DATA=$(yq e '.data' $YAML_PATH)
 DATA_NAME=$(basename $DATA)  # Extraer solo el nombre del dataset
 LORA_LAYERS=$(yq e '.lora-layers' $YAML_PATH)
 BATCH_SIZE=$(yq e '.batch-size' $YAML_PATH)
+
+if [ -z "$BASE_MODEL" ]; then
+    echo "BASE_MODEL is not set. Assuming False."
+    BASE_MODEL="False"
+fi
+
+if [ "$BASE_MODEL" != "True" ]; then
 EXPERIMENT_DIR="output/${MODEL}/${DATA_NAME}/${LORA_LAYERS}/${BATCH_SIZE}"
+else
+EXPERIMENT_DIR="output/${MODEL}/${DATA_NAME}"
+fi
 
 # Crear el árbol de directorios
 mkdir -p $EXPERIMENT_DIR

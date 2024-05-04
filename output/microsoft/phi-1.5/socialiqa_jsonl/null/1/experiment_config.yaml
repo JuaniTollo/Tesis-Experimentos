@@ -1,0 +1,5 @@
+model: "microsoft/phi-1.5"
+data: "socialiqa_jsonl"
+batch-size: 1
+base-model: True
+test-batches: 10

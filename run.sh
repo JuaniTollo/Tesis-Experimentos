@@ -4,7 +4,7 @@
 BASE_DIR=$(dirname "$(realpath "$0")")
 
 # Activar el entorno virtual
-source "$BASE_DIR/../mlx-examples/env/bin/activate"
+source "$BASE_DIR/../mlx-examples/env/bin/activate" || { echo "Failed to activate virtual environment"; exit 1; }
 
 # Ruta al archivo YAML proporcionada como primer argumento
 YAML_PATH="$1"
@@ -33,28 +33,28 @@ mkdir -p "$EXPERIMENT_DIR"
 cd "$EXPERIMENT_DIR" || exit 1
 
 # # Ejecutar comandos para operaciones del modelo
-# CMD="python -m mlx_lm.lora \
-#   --model $MODEL \
-#   --train \
-#   --data \"$BASE_DIR/$DATA\" \
-#   --iters $ITERS \
-#   --seed $SEED \
-#   --lora-layers $LORA_LAYERS \
-#   --batch-size $BATCH_SIZE \
-#   --adapter-path $ADAPTER"
+CMD="python -m mlx_lm.lora \
+  --model $MODEL \
+  --train \
+  --data \"$BASE_DIR/$DATA\" \
+  --iters $ITERS \
+  --seed $SEED \
+  --lora-layers $LORA_LAYERS \
+  --batch-size $BATCH_SIZE \
+  --adapter-path $ADAPTER"
 
-# echo "Running command in $EXPERIMENT_DIR: $CMD"
-# eval $CMD
+echo "Running command in $EXPERIMENT_DIR: $CMD"
+eval $CMD
 
 # # Ejemplo adicional con adapter-path y test
-# CMD="python -m mlx_lm.lora \
-#   --model $MODEL \
-#   --adapter-path $ADAPTER \
-#   --test \
-#   --data \"$BASE_DIR/$DATA\""
+CMD="python -m mlx_lm.lora \
+  --model $MODEL \
+  --adapter-path $ADAPTER \
+  --test \
+  --data \"$BASE_DIR/$DATA\""
 
-# echo "Running command: $CMD"
-# eval $CMD
+echo "Running command: $CMD"
+eval $CMD
 
 # Suponiendo que el experimento ha finalizado y quieres registrar los detalles
 python "$BASE_DIR/register.py" \

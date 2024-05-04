@@ -1,0 +1,3 @@
+model: "mistralai/Mistral-7B-v0.1"
+data: "socialiqa_jsonl"
+base-model: True
